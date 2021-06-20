@@ -1,36 +1,55 @@
+import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const USACOTestCase = ({ data }: { data: any }) => {
-  const containerClasses =
-    data.title === 'Correct answer'
-      ? 'bg-green-700 border-green-700'
-      : 'bg-red-700 border-red-700';
-  const textColor =
-    data.title === 'Correct answer' ? 'text-green-100' : 'text-red-100';
+  const textColor = data.title === 'Correct answer' ? 'green.100' : 'red.100';
   return (
-    <div
-      className={`m-1 inline-block w-[70px] h-[60px] bg-opacity-50 border ${containerClasses} relative`}
+    <Box
+      m="1"
+      display="inline-block"
+      w="70px"
+      h="60px"
+      border="1px"
+      borderColor={data.title === 'Correct answer' ? 'green.700' : 'red.700'}
+      bgColor={data.title === 'Correct answer' ? 'green.900' : 'red.900'}
+      position="relative"
       title={data.title}
     >
-      <div
-        className={`font-bold text-center text-[2.5rem] ${textColor} leading-10`}
+      <Box
+        fontWeight="bold"
+        textAlign="center"
+        fontSize="2.5rem"
+        color={textColor}
+        lineHeight="10"
       >
         {data.symbol}
-      </div>
-      <span
-        className={`absolute bottom-0 left-[4px] ${textColor} text-sm font-bold`}
+      </Box>
+      <Text
+        position="absolute"
+        bottom="0"
+        left="4px"
+        color={textColor}
+        fontSize="sm"
+        fontWeight="bold"
       >
         {data.trialNum}
-      </span>
-      <span
-        className={`absolute bottom-0 right-0 text-right ${textColor} leading-3 p-[2px] text-sm`}
+      </Text>
+      <Text
+        position="absolute"
+        bottom="0"
+        right="0"
+        textAlign="right"
+        color={textColor}
+        lineHeight="3"
+        p="2px"
+        fontSize="xs"
       >
         {data.memory}
         <br />
         {data.time}
-      </span>
-    </div>
+      </Text>
+    </Box>
   );
 };
 
@@ -42,20 +61,28 @@ export default function USACOResults({
 }): JSX.Element | null {
   if (!data) return null;
   return (
-    <div className="mt-3">
-      <p className="font-bold text-gray-200">{data.message}</p>
+    <Box mt="3">
+      <Text fontWeight="bold" color="gray.200">
+        {data.message}
+      </Text>
       {data.output && (
-        <pre className="font-mono text-red-300 leading-tight mt-1">
+        <Text
+          as="pre"
+          fontFamily="mono"
+          color="red.300"
+          lineHeight="none"
+          mt="1"
+        >
           {data.output}
-        </pre>
+        </Text>
       )}
-      <div className="text-center">
+      <Box textAlign="center">
         {data.testCases &&
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           data.testCases.map((tc: any) => (
             <USACOTestCase data={tc} key={tc.trialNum} />
           ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

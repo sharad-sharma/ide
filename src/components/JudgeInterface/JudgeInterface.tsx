@@ -1,3 +1,4 @@
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useAtomValue } from 'jotai/utils';
 import React, { useState } from 'react';
 import { currentLangAtom, mainMonacoEditorAtom } from '../../atoms/workspace';
@@ -64,27 +65,37 @@ export default function JudgeInterface(): JSX.Element {
   };
 
   return (
-    <div className="relative h-full flex flex-col">
-      <div className="p-4 pb-0">
-        <p className="text-gray-100 font-bold text-lg">
+    <Flex position="relative" h="full" direction="column">
+      <Box p="4" pb="0">
+        <Text color="gray.100" fontWeight="bold" fontSize="lg">
           {settings.judgeUrl}
           {/* Problem 1. Social Distancing I */}
-        </p>
-        <p className="text-gray-400 text-sm">
+        </Text>
+        <Text color="gray.400" fontSize="sm">
           Early access. Report issues to Github. Do not spam submit.
           {/* USACO 2020 US Open Contest, Bronze */}
-        </p>
-      </div>
-      <div className="flex-1 overflow-y-auto px-4">
+        </Text>
+      </Box>
+      <Box flex="1" overflowY="auto" px="4">
         <USACOResults data={statusData} />
-      </div>
-      <button
-        className="block w-full py-2 text-sm uppercase font-bold text-indigo-300 hover:text-indigo-100 bg-indigo-900 bg-opacity-50 focus:outline-none disabled:cursor-not-allowed"
-        disabled={statusData?.statusCode <= -8}
+      </Box>
+      <Button
+        colorScheme="purple"
+        color="white"
+        bgColor="purple.900"
+        _hover={{
+          bgColor: 'purple.800',
+        }}
+        _active={{
+          bgColor: 'purple.800',
+        }}
+        borderRadius="0"
+        isLoading={statusData?.statusCode <= -8}
+        loadingText="Submitting..."
         onClick={() => handleSubmit()}
       >
         Submit
-      </button>
-    </div>
+      </Button>
+    </Flex>
   );
 }

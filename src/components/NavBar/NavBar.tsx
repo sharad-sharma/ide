@@ -1,3 +1,4 @@
+import { Box, Divider, Flex, Text } from '@chakra-ui/react';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -7,6 +8,31 @@ import {
 import { Link } from '@reach/router';
 import React, { useState } from 'react';
 import { isUserOnline, useOnlineUsers } from '../../hooks/useOnlineUsers';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const NavItem = (props: any): JSX.Element => {
+  return (
+    <Box
+      position="relative"
+      display="inline-flex"
+      alignItems="center"
+      px="4"
+      py="2"
+      shadow="sm"
+      fontSize="sm"
+      fontWeight="medium"
+      color="gray.200"
+      _hover={{
+        bg: 'gray.800',
+      }}
+      _focus={{
+        bg: 'gray.800',
+        outline: 'none',
+      }}
+      {...props}
+    />
+  );
+};
 
 export interface DesktopNavBarProps {
   fileMenu: JSX.Element;
@@ -39,51 +65,60 @@ export const NavBar = (props: DesktopNavBarProps): JSX.Element => {
   };
 
   return (
-    <div className="flex items-center overflow-x-auto">
-      <div className="flex items-center divide-x divide-gray-700">
-        <Link
-          to="/"
-          className="relative inline-flex items-center px-4 py-2 shadow-sm text-sm font-medium text-gray-200 hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
-        >
-          <HomeIcon className="h-5 w-5" />
-        </Link>
+    <Flex overflowX="auto">
+      <Flex>
+        <NavItem as={Link} to="/">
+          <Box as={HomeIcon} h="5" w="5" />
+        </NavItem>
+        <Divider orientation="vertical" borderColor="gray.600" />
         {props.fileMenu}
-        <button
-          type="button"
-          className="relative inline-flex items-center px-4 py-2 shadow-sm text-sm font-medium text-gray-200 hover:bg-gray-800 focus:bg-gray-800 focus:outline-none"
-          onClick={() => handleShare()}
-        >
-          <ShareIcon
-            className="-ml-1 mr-2 h-5 w-5 text-gray-400"
-            aria-hidden="true"
-          />
+        <Divider orientation="vertical" borderColor="gray.600" />
+        <NavItem as="button" onClick={() => handleShare()}>
+          <Box as={ShareIcon} ml="-1" mr="2" h="5" w="5" color="gray.400" />
           {showCopied ? 'URL Copied!' : 'Share'}
-        </button>
-      </div>
+        </NavItem>
+      </Flex>
       {props.runButton}
-      <div className="flex items-center divide-x divide-gray-700">
-        <a
+      <Flex>
+        <NavItem
+          as="a"
           href="https://github.com/cpinitiative/ide/issues"
-          target="_blank"
-          className="px-4 py-2 text-gray-400 hover:text-gray-200 text-sm font-medium flex-shrink-0"
+          color="gray.400"
+          _hover={{
+            color: 'gray.200',
+          }}
           rel="noreferrer"
         >
           Report an Issue
-        </a>
-        <a
+        </NavItem>
+        <Divider orientation="vertical" borderColor="gray.600" />
+        <NavItem
+          as="a"
           href="https://github.com/cpinitiative/ide"
           target="_blank"
           rel="noreferrer"
-          className="px-4 py-2 text-gray-400 hover:text-gray-200 text-sm font-medium flex-shrink-0"
+          color="gray.400"
+          _hover={{
+            color: 'gray.200',
+          }}
         >
           Star this on Github!
-        </a>
+        </NavItem>
         {props.showViewOnly && (
-          <span className="px-4 py-2 text-gray-400 text-sm font-medium">
-            View Only
-          </span>
+          <>
+            <Divider orientation="vertical" borderColor="gray.600" />
+            <Text
+              px="4"
+              py="2"
+              color="gray.400"
+              fontSize="sm"
+              fontWeight="medium"
+            >
+              View Only
+            </Text>
+          </>
         )}
-      </div>
+      </Flex>
       <div className="flex-1" />
       {props.showSidebarButton && (
         <div>
@@ -107,6 +142,6 @@ export const NavBar = (props: DesktopNavBarProps): JSX.Element => {
           </button>
         </div>
       )}
-    </div>
+    </Flex>
   );
 };

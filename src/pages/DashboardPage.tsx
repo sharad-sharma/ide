@@ -5,6 +5,7 @@ import { useAtomValue } from 'jotai/utils';
 import { firebaseUserAtom } from '../atoms/firebaseAtoms';
 import firebase from 'firebase/app';
 import { File } from '../components/FilesGrid';
+import { Box, Flex } from '@chakra-ui/react';
 
 export default function DashboardPage(
   _props: RouteComponentProps
@@ -38,8 +39,8 @@ export default function DashboardPage(
   }, [firebaseUser]);
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 lg:p-12 min-h-full flex flex-col">
-      <div className="flex-1">
+    <Flex p={[4, 6, 8, 12]} minH="full" direction="column">
+      <Box flex="1">
         <h1 className="text-gray-100 text-2xl md:text-4xl font-black">
           Real-Time Collaborative Online IDE
         </h1>
@@ -63,8 +64,8 @@ export default function DashboardPage(
             <FilesGrid files={files} />
           </>
         )}
-      </div>
-      <div className="mt-6 text-gray-400">
+      </Box>
+      <Box mt="6" color="gray.400">
         Looking to get better at USACO? Check out the{' '}
         <a
           href="https://usaco.guide/"
@@ -75,7 +76,7 @@ export default function DashboardPage(
           USACO Guide
         </a>
         !
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 }

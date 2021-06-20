@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { Box } from '@chakra-ui/react';
 import React from 'react';
 
 export interface TabBarProps {
@@ -16,25 +16,36 @@ export const TabBar = ({
   onTabSelect,
 }: TabBarProps): JSX.Element => {
   return (
-    <div className="flex bg-black">
-      <div className="flex-1">
-        {tabs.map(tab => (
-          <button
-            key={tab.value}
-            className={classNames(
-              tab.value === activeTab
-                ? 'bg-[#1E1E1E] text-gray-200'
-                : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800 active:bg-gray-800',
-              'px-4 py-0.5 font-medium text-sm focus:outline-none transition'
-            )}
-            onClick={() => {
-              if (onTabSelect) onTabSelect(tab);
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-    </div>
+    <Box bg="black">
+      {tabs.map(tab => (
+        <Box
+          as="button"
+          key={tab.value}
+          bg={tab.value === activeTab ? '#1E1E1E' : 'transparent'}
+          px="4"
+          py="0.5"
+          fontWeight="medium"
+          fontSize="sm"
+          _focus={{
+            outline: 'none',
+          }}
+          _hover={
+            tab.value === activeTab
+              ? undefined
+              : {
+                  color: 'gray.300',
+                  bg: 'gray.800',
+                }
+          }
+          color={tab.value === activeTab ? 'gray.200' : 'gray.400'}
+          transition="all 150ms cubic-bezier(0.4, 0, 0.2, 1)"
+          onClick={() => {
+            if (onTabSelect) onTabSelect(tab);
+          }}
+        >
+          {tab.label}
+        </Box>
+      ))}
+    </Box>
   );
 };

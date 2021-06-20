@@ -43,6 +43,7 @@ import {
   mobileActiveTabAtom,
   showSidebarAtom,
 } from '../atoms/workspaceUI';
+import { Box, Flex } from '@chakra-ui/react';
 
 function encode(str: string | null) {
   return btoa(unescape(encodeURIComponent(str || '')));
@@ -229,9 +230,9 @@ export default function EditorPage(props: EditorPageProps): JSX.Element {
     return <MessagePage message="This file is private." />;
 
   return (
-    <div className="h-full">
-      <div className="h-full flex flex-col">
-        <div className="flex-shrink-0 bg-[#1E1E1E]">
+    <div>
+      <Flex height="100vh" direction="column">
+        <Box flexShrink={0} bg="#1E1E1E">
           <NavBar
             fileMenu={
               <FileMenu
@@ -252,17 +253,17 @@ export default function EditorPage(props: EditorPageProps): JSX.Element {
             onToggleSidebar={handleToggleSidebar}
             showSidebarButton={isDesktop}
           />
-        </div>
-        <div className="flex-1 min-h-0">
+        </Box>
+        <Box flex="1" minH="0">
           <Workspace />
-        </div>
+        </Box>
         {!isDesktop && (
           <MobileBottomNav
             activeTab={mobileActiveTab}
             onActiveTabChange={setMobileActiveTab}
           />
         )}
-      </div>
+      </Flex>
 
       <SettingsModal
         isOpen={isSettingsModalOpen}

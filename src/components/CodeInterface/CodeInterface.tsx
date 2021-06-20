@@ -12,6 +12,7 @@ import {
 import { LazyFirepadEditor } from '../LazyFirepadEditor';
 import { useAtomValue } from 'jotai/utils';
 import { authenticatedFirebaseRefAtom } from '../../atoms/firebaseAtoms';
+import { Box, Flex, Text } from '@chakra-ui/react';
 
 export const CodeInterface = ({
   className,
@@ -48,11 +49,11 @@ export const CodeInterface = ({
   }, [editor, setMainMonacoEditor]);
 
   return (
-    <div
-      className={classNames(
-        'bg-[#1E1E1E] text-gray-200 flex flex-col',
-        className
-      )}
+    <Flex
+      bg="#1E1E1E"
+      color="gray.200"
+      direction="column"
+      className={className}
     >
       <TabBar
         tabs={[
@@ -63,7 +64,7 @@ export const CodeInterface = ({
         activeTab={lang}
         onTabSelect={tab => setLang(tab.value as Language)}
       />
-      <div className="flex-1 overflow-hidden">
+      <Box flex="1" overflow="hidden">
         <LazyFirepadEditor
           theme="vs-dark"
           language={{ cpp: 'cpp', java: 'java', py: 'python' }[lang]}
@@ -86,8 +87,14 @@ export const CodeInterface = ({
           useEditorWithVim={true}
           dataTestId="code-editor"
         />
-      </div>
-      <p className="text-sm font-mono text-gray-200 pl-4 status-node" />
-    </div>
+      </Box>
+      <Text
+        fontSize="sm"
+        fontFamily="mono"
+        color="gray.200"
+        pl="4"
+        className="status-node"
+      />
+    </Flex>
   );
 };

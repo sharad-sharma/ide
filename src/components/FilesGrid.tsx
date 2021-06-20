@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@reach/router';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Box } from '@chakra-ui/layout';
 dayjs.extend(relativeTime);
 
 export type File = {
@@ -16,19 +17,30 @@ export interface FilesGridProps {
 
 export default function FilesGrid(props: FilesGridProps): JSX.Element {
   return (
-    <div className="mt-4 -mx-2">
+    <Box mt="4" mx="-2">
       {props.files.map(file => (
-        <Link
+        <Box
+          as={Link}
           key={file.id}
           to={`/${file.id.substring(1)}`}
-          className="bg-gray-800 hover:bg-gray-700 px-4 py-3 rounded-lg inline-block w-full max-w-sm m-2"
+          px="4"
+          py="3"
+          rounded="lg"
+          display="inline-block"
+          w="full"
+          maxW="sm"
+          m="2"
+          bg="gray.800"
+          _hover={{
+            bg: 'dark.300',
+          }}
         >
-          <div className="text-gray-200">{file.title || 'Unnamed File'}</div>
-          <div className="text-gray-400">
+          <Box color="gray.200">{file.title || 'Unnamed File'}</Box>
+          <Box color="gray.400">
             Last Accessed {dayjs(file.lastAccessTime).fromNow()}
-          </div>
-        </Link>
+          </Box>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 }
