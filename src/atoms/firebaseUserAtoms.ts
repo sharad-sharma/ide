@@ -82,7 +82,16 @@ export const signInWithGoogleAtom = atom(null, (get, set, _) => {
         // linked successfully
         const newName = result.user?.providerData[0]?.displayName;
         if (newName)
-          firebase.auth().currentUser!.updateProfile({ displayName: newName });
+          firebase
+            .auth()
+            .currentUser!.updateProfile({ displayName: newName })
+            .then(() => {
+              // Sometimes dashboard is not showing user name so, reload is required
+              window.location.reload();
+            })
+            .catch(error => {
+              alert('Error signing in: ' + error);
+            });
       })
       .catch(error => {
         if (error.code === 'auth/credential-already-in-use') {
